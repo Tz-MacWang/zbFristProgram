@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>echarts-pie</title>
+  <script src="echarts.min.js"></script>
+  <style>
+    #hole {
+      display: block;
+      float: left;
+      background-color: black;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+<div id="pie" style="width: 300px; height: 300px;"></div>
+
+<script type="text/javascript">
+  var mychart = echarts.init(document.getElementById('pie'));
+  var option = {
+    legend: {
+      orient: 'vertical',
+      x: 'left',
+      data: ['A', 'B', 'C']
+    },
+    series: {
+      type: 'pie',
+      radius: ['30%', '70%'],
+      avoidLabelOverlap: false,
+      label: {
+        normal: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          show: true,
+          textStyle: {
+            show: true,
+            textStyle: {
+              fontSize: '50',
+              fontWeight: 'bold',
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            },
+          },
+        },
+      },
+      data: [
+        {name: 'A', value: 1121},
+        {name: 'B', value: 3423},
+        {name: 'C', value: 2322},
+      ]
+    }
+  };
+  mychart.setOption(option);
+</script>
+</body>
+</html>

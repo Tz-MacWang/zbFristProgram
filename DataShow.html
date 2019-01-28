@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数据展板</title>
+  <link rel="stylesheet" href="DataShow.css" type="text/css" />
+  <script src="Vue-v2.5.17.js"></script>
+  <!--<script src="Vue-v2.5.17.min.js"></script>-->
+  <script src="echarts.min.js"></script>
+  <script src="DataShow.js"></script>
+</head>
+<body>
+<template id="tinyItem">
+  <div class="tinyItem" :style="bimg">
+      <div>{{ name }}</div>
+      <div>{{ num }}</div>
+  </div>
+</template>
+<template id="titleItem">
+  <div class="titleItem">
+    <div>{{ title }}</div>
+    <div>
+      <span id="week" class="week">{{ week }}</span>
+      <span>{{ date }}</span>
+      <span>{{ time }}</span>
+    </div>
+  </div>
+</template>
+<template id="middleItem">
+  <div class="middleItem">
+    <div class="titleLine">
+      <span class="titleLineTitle">{{ title }}</span>
+      <span class="titleLineTotal">{{ total }}</span>
+    </div>
+    <div class="contentLine" :id="id"></div>
+  </div>
+</template>
+
+<div id="app">
+  <div id="topContent" class="topContent">
+    <tiny-item :background-img="propertyImg" name="物业" num="8"></tiny-item>
+    <tiny-item background-img="./img/物业.png" name="物业" num="8"></tiny-item>
+    <tiny-item background-img="./img/物业.png" name="物业" num="8"></tiny-item>
+    <title-item title="公司名称" week="星期日" date="09月23日" time="21:14:56"></title-item>
+    <tiny-item background-img="./img/物业.png" name="物业" num="8"></tiny-item>
+    <tiny-item background-img="./img/物业.png" name="物业" num="8"></tiny-item>
+    <tiny-item background-img="./img/物业.png" name="物业" num="8"></tiny-item>
+  </div>
+  <div id="secondContent" class="secondContent">
+    <middle-item title="已缴账单" total="总金额180786.2元" id="paid"></middle-item>
+    <middle-item title="已缴账单" total="总金额180786.2元" id="stop"></middle-item>
+    <middle-item title="已缴账单" total="总金额180786.2元" id="person"></middle-item>
+    <middle-item title="已缴账单" total="总金额180786.2元" id="repair"></middle-item>
+    <middle-item title="已缴账单" total="总金额180786.2元" id="complain"></middle-item>
+  </div>
+</div>
+
+<script>
+  Vue.component("tiny-item", {
+    template: "#tinyItem",
+    props: ["background-img", "name", "num"],
+    data: function () {
+      return {
+        bimg: {
+          backgroundImage: "url(" + this.$props.backgroundImg + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "5%",
+        },
+      };
+    }
+  });
+  
+  Vue.component("title-item", {
+    template: "#titleItem",
+    props: ["title", "week", "date", "time"],
+  });
+  
+  Vue.component("middle-item", {
+    template: "#middleItem",
+    props: ['title', 'total', 'id'],
+  });
+
+  var option = {
+    legend: {
+      orient: 'vertical',
+      x: 'left',
+      data: ['A', 'B', 'C']
+    },
+    series: {
+      type: 'pie',
+      radius: ['50%', '70%'],
+      avoidLabelOverlap: false,
+      label: {
+        normal: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          show: true,
+          textStyle: {
+            show: true,
+            textStyle: {
+              fontSize: '50',
+              fontWeight: 'bold',
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            },
+          },
+        },
+      },
+      center: ['70%', '50%'],
+      data: [
+        {name: 'A', value: 1121, itemStyle:{color: '#d13435'}},
+        {name: 'B', value: 3423, itemStyle:{color: '#e2b80a'}},
+        {name: 'C', value: 2322, itemStyle:{color: '#0399d6'}},
+      ]
+    }
+  };
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      propertyImg: "./img/物业.png",
+    },
+    methods: {},
+    computed: {},
+  });
+  var mychart = echarts.init(document.getElementById('paid'));
+    mychart.setOption(option);
+</script>
+</body>
+</html>
